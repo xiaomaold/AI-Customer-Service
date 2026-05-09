@@ -1,0 +1,89 @@
+server:
+  port: ${SERVER_PORT:8080}
+
+spring:
+  application:
+    name: ai-rag
+  servlet:
+    multipart:
+      max-file-size: ${SPRING_MULTIPART_MAX_FILE_SIZE:200MB}
+      max-request-size: ${SPRING_MULTIPART_MAX_REQUEST_SIZE:200MB}
+  datasource:
+    driver-class-name: ${MYSQL_DRIVER:com.mysql.cj.jdbc.Driver}
+    jdbc-url: ${MYSQL_URL:}
+    username: ${MYSQL_USERNAME:}
+    password: ${MYSQL_PASSWORD:}
+    pgvector:
+      driver-class-name: ${PGVECTOR_DRIVER:org.postgresql.Driver}
+      jdbc-url: ${PGVECTOR_URL:}
+      username: ${PGVECTOR_USERNAME:}
+      password: ${PGVECTOR_PASSWORD:}
+  rabbitmq:
+    host: ${RABBITMQ_HOST:}
+    port: ${RABBITMQ_PORT:5672}
+    username: ${RABBITMQ_USERNAME:}
+    password: ${RABBITMQ_PASSWORD:}
+    virtual-host: ${RABBITMQ_VHOST:/}
+    listener:
+      simple:
+        default-requeue-rejected: false
+
+mybatis-plus:
+  configuration:
+    map-underscore-to-camel-case: true
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+  global-config:
+    db-config:
+      logic-delete-field: deleted
+      logic-delete-value: 1
+      logic-not-delete-value: 0
+
+langchain4j:
+  community:
+    dashscope:
+      chat-model:
+        api-key: ${DASHSCOPE_API_KEY:}
+        model-name: ${DASHSCOPE_CHAT_MODEL:qwen-turbo}
+        temperature: ${DASHSCOPE_CHAT_TEMPERATURE:0.3}
+        max-tokens: ${DASHSCOPE_CHAT_MAX_TOKENS:2048}
+      streaming-chat-model:
+        api-key: ${DASHSCOPE_API_KEY:}
+        model-name: ${DASHSCOPE_STREAMING_MODEL:qwen-turbo}
+        temperature: ${DASHSCOPE_CHAT_TEMPERATURE:0.3}
+        max-tokens: ${DASHSCOPE_CHAT_MAX_TOKENS:2048}
+      embedding-model:
+        api-key: ${DASHSCOPE_API_KEY:}
+        model-name: ${DASHSCOPE_EMBEDDING_MODEL:text-embedding-v4}
+
+rag:
+  chat:
+    history-limit: ${RAG_HISTORY_LIMIT:10}
+    retrieval-top-k: ${RAG_RETRIEVAL_TOP_K:5}
+    model-name: ${DASHSCOPE_STREAMING_MODEL:qwen-turbo}
+  knowledge:
+    upload-dir: ${RAG_UPLOAD_DIR:data/uploads}
+    max-segment-size: ${RAG_MAX_SEGMENT_SIZE:500}
+    max-overlap-size: ${RAG_MAX_OVERLAP_SIZE:100}
+    retrieval-max-results: ${RAG_RETRIEVAL_MAX_RESULTS:5}
+    min-score: ${RAG_MIN_SCORE:0.3}
+    embedding-dimension: ${RAG_EMBEDDING_DIMENSION:1024}
+    allowed-extensions:
+      - pdf
+      - doc
+      - docx
+      - txt
+      - md
+      - markdown
+    async:
+      exchange: ${RAG_KNOWLEDGE_ASYNC_EXCHANGE:rag.knowledge.exchange}
+      queue: ${RAG_KNOWLEDGE_ASYNC_QUEUE:rag.knowledge.document.process}
+      routing-key: ${RAG_KNOWLEDGE_ASYNC_ROUTING_KEY:rag.knowledge.document.process}
+
+security:
+  jwt:
+    secret: ${JWT_SECRET:}
+    expiration-seconds: ${JWT_EXPIRATION_SECONDS:7200}
+
+business-center:
+  client:
+    base-url: ${BUSINESS_CENTER_BASE_URL:http://localhost:8091/api/business}

@@ -1,0 +1,48 @@
+### Maven ###
+target/
+.mvn/repository/
+*.class
+*.jar
+*.war
+*.nar
+*.ear
+
+### IDE ###
+.idea/
+*.iml
+.vscode/
+*.swp
+*.swo
+
+### Node / Frontend ###
+node_modules/
+dist/
+.vite/
+*.vue.js
+*.vue.js.map
+*.ts.js
+*.ts.js.map
+business-center-frontend/src/**/*.js
+business-center-frontend/src/**/*.js.map
+frontend/src/**/*.js
+frontend/src/**/*.js.map
+
+### OS ###
+.DS_Store
+Thumbs.db
+
+### Project specific ###
+data/uploads/
+data/sample-kb-docs/
+tmp/
+*.local.*
+logs/
+*.log
+
+### Environment ###
+.env
+.env.*
+
+### Temp files ###
+tmp-*.sql
+tmp/

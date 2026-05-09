@@ -1,0 +1,84 @@
+### List seed users
+GET http://localhost:8091/api/business/users
+
+### List products
+GET http://localhost:8091/api/business/products
+
+### Create order as customer
+POST http://localhost:8091/api/business/orders
+Content-Type: application/json
+
+{
+  "userId": 2001,
+  "productNo": "P-1001",
+  "quantity": 1,
+  "sourceChannel": "AI_CHAT"
+}
+
+### Cancel unpaid order
+POST http://localhost:8091/api/business/orders/ORD202604220001/cancel
+Content-Type: application/json
+
+{
+  "userId": 2001,
+  "cancelReason": "changed mind"
+}
+
+### Mark order paid from backoffice
+POST http://localhost:8091/api/business/orders/ORD202604220001/mark-paid
+
+### Create leave work order as employee
+POST http://localhost:8091/api/business/work-orders
+Content-Type: application/json
+
+{
+  "userId": 1001,
+  "workOrderType": "LEAVE",
+  "content": "need leave next week",
+  "extData": {
+    "leaveDays": 3,
+    "leaveType": "ANNUAL"
+  },
+  "sourceChannel": "AI_CHAT"
+}
+
+### Create human service work order as customer
+POST http://localhost:8091/api/business/work-orders
+Content-Type: application/json
+
+{
+  "userId": 2001,
+  "workOrderType": "HUMAN_SERVICE",
+  "content": "need human support",
+  "extData": {
+    "sessionId": 12345,
+    "lastQuestion": "where is my shipment",
+    "aiSummary": "customer wants manual follow-up for shipment issue"
+  },
+  "sourceChannel": "AI_CHAT"
+}
+
+### Create refund work order as customer
+POST http://localhost:8091/api/business/work-orders
+Content-Type: application/json
+
+{
+  "userId": 2001,
+  "workOrderType": "REFUND",
+  "content": "please refund this order",
+  "extData": {
+    "orderNo": "ORD202604220001"
+  },
+  "sourceChannel": "AI_CHAT"
+}
+
+### Update work order status
+POST http://localhost:8091/api/business/work-orders/WO202604220001/status
+Content-Type: application/json
+
+{
+  "status": "REJECTED",
+  "processedBy": 9001,
+  "processRemark": "invalid request",
+  "rejectReason": "missing supporting evidence"
+}

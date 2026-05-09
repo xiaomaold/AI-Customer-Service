@@ -1,0 +1,17 @@
+package com.airag.modules.chat.routing;
+
+public enum CustomerServiceIntent {
+    KNOWLEDGE_QA,
+    RULE_QUERY,
+    PROCESS_QUERY,
+    STRUCTURED_FACT_QUERY,
+    PRODUCT_QUERY,
+    FORM_GENERATION,
+    ORDER_SUBMISSION,
+    WORK_ORDER_SUBMISSION,
+    HUMAN_HANDOFF,
+    COMPLAINT_ESCALATION,
+    STATUS_QUERY,
+    DOCUMENT_DISCOVERY,
+    SMALL_TALK
+}

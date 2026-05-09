@@ -1,0 +1,76 @@
+### Health check style startup probe
+GET http://localhost:8080/api/knowledge/bases
+
+### 1. Create a knowledge base
+POST http://localhost:8080/api/knowledge/bases
+Content-Type: application/json
+
+{
+  "knowledgeBaseName": "企业客服知识库",
+  "description": "用于测试退款、发票、售后问答"
+}
+
+### 2. List knowledge bases
+GET http://localhost:8080/api/knowledge/bases
+
+### 3. Upload a document to a knowledge base
+POST http://localhost:8080/api/knowledge/documents/upload?knowledgeBaseId=1
+Content-Type: multipart/form-data; boundary=WebAppBoundary
+
+--WebAppBoundary
+Content-Disposition: form-data; name="file"; filename="faq.md"
+Content-Type: text/markdown
+
+# 退款规则
+订单支付后7天内可申请退款。
+
+# 发票规则
+企业用户可申请增值税专用发票。
+--WebAppBoundary--
+
+### 4. List documents under a knowledge base
+GET http://localhost:8080/api/knowledge/documents?knowledgeBaseId=1
+
+### 5. Preview document chunks
+GET http://localhost:8080/api/knowledge/documents/1/chunks
+
+### 6. Rebuild document index
+POST http://localhost:8080/api/knowledge/documents/1/rebuild-index
+
+### 7. Create a chat session
+POST http://localhost:8080/api/chat/sessions
+Content-Type: application/json
+
+{
+  "userId": 1,
+  "sessionName": "聊天"
+}
+
+### 8. List sessions
+GET http://localhost:8080/api/chat/sessions?userId=1
+
+### 8.1 Rename session
+PUT http://localhost:8080/api/chat/sessions/1/name
+Content-Type: application/json
+
+{
+  "sessionName": "公积金可支付费用"
+}
+
+### 8.2 Toggle pin session
+PUT http://localhost:8080/api/chat/sessions/1/pin
+
+### 9. Stream chat with knowledge base filtering
+POST http://localhost:8080/api/chat/stream
+Content-Type: application/json
+Accept: text/event-stream
+
+{
+  "userId": 1,
+  "sessionId": 1,
+  "knowledgeBaseId": 1,
+  "question": "退款流程是什么？"
+}
+
+### 10. Query message history
+GET http://localhost:8080/api/chat/sessions/1/messages?userId=1

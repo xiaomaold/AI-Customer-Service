@@ -1,0 +1,15 @@
+server:
+  port: ${BUSINESS_CENTER_PORT:8091}
+
+spring:
+  application:
+    name: business-center
+  datasource:
+    driver-class-name: ${BUSINESS_CENTER_MYSQL_DRIVER:com.mysql.cj.jdbc.Driver}
+    url: ${BUSINESS_CENTER_MYSQL_URL:jdbc:mysql://192.168.150.101:3306/business_center?useUnicode=true&characterEncoding=utf8&serverTimezone=Asia/Shanghai}
+    username: ${BUSINESS_CENTER_MYSQL_USERNAME:root}
+    password: ${BUSINESS_CENTER_MYSQL_PASSWORD:}
+
+business-center:
+  seed-data:
+    enabled: true
